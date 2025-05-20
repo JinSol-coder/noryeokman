@@ -40,22 +40,7 @@
 
 4. 웹 브라우저에서 접속:
 
+   ```
+   아직 미정
+   ```
 
-## 프로젝트 구조
-프로젝트/
-├── web.py # Flask 애플리케이션 메인 파일
-├── templates/ # HTML 템플릿 디렉터리
-│ ├── index.html # 메인 페이지
-│ ├── profile.html # 프로필 페이지
-│ ├── performance.html # 공연소개 페이지
-│ ├── academy.html # 아카데미 페이지
-│ └── reservation.html # 예약문의 페이지
-├── static/ # 정적 파일 디렉터리
-│ ├── css/ # CSS 파일
-│ │ └── style.css # 메인 스타일시트
-│ ├── js/ # JavaScript 파일
-│ │ └── script.js # 메인 스크립트
-│ └── images/ # 이미지 파일
-│ ├── post-noryeokman.png # 프로필 이미지
-│ └── (기타 이미지 파일들)
-└── README.md # 프로젝트 설명 파일
