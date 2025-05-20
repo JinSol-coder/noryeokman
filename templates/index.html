@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>노력맨 버블쇼</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>노력맨 버블쇼</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('profile') }}">프로필</a></li>
+          <li><a href="{{ url_for('performance') }}">공연소개</a></li>
+          <li><a href="{{ url_for('academy') }}">아카데미</a></li>
+          <li><a href="{{ url_for('reservation') }}">예약문의</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <img src="{{ url_for('static', filename='images/post-noryeokman.png') }}" alt="노력맨 버블쇼">
+      <h2>다양한 버블 공연과 교육, 장비제작을 전문으로 하는 개인 아티스트 브랜드</h2>
+      <a href="{{ url_for('reservation') }}" class="btn">예약 문의하기</a>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <div class="feature">
+        <h3>공연</h3>
+        <p>손버블, 버블막대, 거품기, 연기버블, 불쇼 등 다양한 스타일의 버블쇼 공연</p>
+        <a href="{{ url_for('performance') }}" class="btn-small">자세히 보기</a>
+      </div>
+      <div class="feature">
+        <h3>교육</h3>
+        <p>버블쇼 기술 교육부터 공연 구성, 실전 공연까지 체계적인 커리큘럼</p>
+        <a href="{{ url_for('academy') }}" class="btn-small">자세히 보기</a>
+      </div>
+      <div class="feature">
+        <h3>장비</h3>
+        <p>버블쇼 장비 제작 노하우 공유 및 맞춤형 장비 제작</p>
+        <a href="{{ url_for('academy') }}" class="btn-small">자세히 보기</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>연락처: 010-8944-3907 | 이메일: 05070208@hanmail.net</p>
+      <p>주소: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
+      <p>&copy; 2024 노력맨 버블쇼. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
