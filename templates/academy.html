@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>아카데미 - 노력맨 버블쇼</title>
+  <meta name="description" content="노력맨 버블쇼의 교육 과정과 장비 제작 노하우를 소개합니다.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>노력맨 버블쇼</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">홈</a></li>
+          <li><a href="{{ url_for('profile') }}">프로필</a></li>
+          <li><a href="{{ url_for('performance') }}">공연소개</a></li>
+          <li><a href="{{ url_for('academy') }}" class="active">아카데미</a></li>
+          <li><a href="{{ url_for('reservation') }}">예약문의</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="academy-hero">
+    <div class="container">
+      <h2>아카데미</h2>
+      <p>버블쇼 기술 교육과 장비 제작 노하우를 배워보세요</p>
+    </div>
+  </section>
+
+  <section class="education">
+    <div class="container">
+      <h3>버블쇼 교육 과정</h3>
+      <div class="curriculum">
+        <div class="curriculum-item">
+          <h4>1단계: 기본 기술 익히기</h4>
+          <p>버블 솔루션 제작부터 기본적인 버블 만들기 기술까지 배웁니다.</p>
+          <ul>
+            <li>버블 솔루션 제작 방법</li>
+            <li>기본 버블 도구 사용법</li>
+            <li>손버블 기초 기술</li>
+          </ul>
+        </div>
+        <div class="curriculum-item">
+          <h4>2단계: 공연 구성과 무대 연출</h4>
+          <p>다양한 버블 기술을 활용한 공연 구성과 무대 연출법을 배웁니다.</p>
+          <ul>
+            <li>버블 연출 테크닉</li>
+            <li>공연 구성 방법</li>
+            <li>관객 참여 유도 방법</li>
+          </ul>
+        </div>
+        <div class="curriculum-item">
+          <h4>3단계: 실전 공연 및 수료</h4>
+          <p>실제 공연을 통해 배운 기술을 적용하고 수료증을 받습니다.</p>
+          <ul>
+            <li>실전 공연 준비</li>
+            <li>공연 실습</li>
+            <li>수료증 발급</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="equipment">
+    <div class="container">
+      <h3>장비 제작 노하우</h3>
+      <div class="equipment-info">
+        <p>버블쇼에 필요한 다양한 장비를 직접 제작하는 방법을 배울 수 있습니다.</p>
+        <div class="equipment-items">
+          <div class="equipment-item">
+            <h4>버블 솔루션</h4>
+            <p>최적의 버블을 만들기 위한 솔루션 제작법</p>
+          </div>
+          <div class="equipment-item">
+            <h4>버블 도구</h4>
+            <p>다양한 형태의 버블을 만들기 위한 도구 제작법</p>
+          </div>
+          <div class="equipment-item">
+            <h4>특수 효과 장비</h4>
+            <p>연기, 불 등 특수 효과를 위한 장비 제작법</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>연락처: 010-8944-3907 | 이메일: 05070208@hanmail.net</p>
+      <p>주소: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
+      <p>&copy; 2024 노력맨 버블쇼. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>예약문의 - 노력맨 버블쇼</title>
+  <meta name="description" content="노력맨 버블쇼의 공연 및 교육, 장비 관련 예약 및 문의를 접수합니다.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>노력맨 버블쇼</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">홈</a></li>
+          <li><a href="{{ url_for('profile') }}">프로필</a></li>
+          <li><a href="{{ url_for('performance') }}">공연소개</a></li>
+          <li><a href="{{ url_for('academy') }}">아카데미</a></li>
+          <li><a href="{{ url_for('reservation') }}" class="active">예약문의</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="reservation-hero">
+    <div class="container">
+      <h2>예약문의</h2>
+      <p>공연 및 교육, 장비 관련 예약 및 문의를 접수합니다</p>
+    </div>
+  </section>
+
+  <section class="reservation-options">
+    <div class="container">
+      <h3>예약 가능 항목</h3>
+      <div class="options">
+        <div class="option-item">
+          <h4>버블쇼 공연</h4>
+          <p>다양한 행사와 이벤트에 맞춤형 버블쇼 공연을 예약할 수 있습니다.</p>
+        </div>
+        <div class="option-item">
+          <h4>버블쇼 교육</h4>
+          <p>버블쇼 기술 교육부터 공연 구성, 실전 공연까지 체계적인 교육을 신청할 수 있습니다.</p>
+        </div>
+        <div class="option-item">
+          <h4>장비 구매 및 제작</h4>
+          <p>버블쇼에 필요한 장비 구매 및 맞춤형 장비 제작을 요청할 수 있습니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reservation-info">
+    <div class="container">
+      <h3>예약 시 알려주셔야 할 정보</h3>
+      <div class="info-list">
+        <ul>
+          <li>행사 날짜</li>
+          <li>행사 장소</li>
+          <li>대상 연령대 및 인원수</li>
+          <li>희망 공연 시간</li>
+        </ul>
+        <p class="note">※ 위 정보를 전화나 문자로 알려주시면 됩니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <div class="container">
+      <h3>연락처</h3>
+      <div class="contact-info">
+        <p><strong>전화 및 문자</strong>: 010-8944-3907</p>
+        <p><strong>이메일</strong>: 05070208@hanmail.net</p>
+        <p><strong>주소</strong>: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>연락처: 010-8944-3907 | 이메일: 05070208@hanmail.net</p>
+      <p>주소: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
+      <p>&copy; 2024 노력맨 버블쇼. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로필 - 노력맨 버블쇼</title>
+  <meta name="description" content="노력맨 버블쇼 아티스트의 프로필과 공연 이력을 소개합니다.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>노력맨 버블쇼</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">홈</a></li>
+          <li><a href="{{ url_for('profile') }}" class="active">프로필</a></li>
+          <li><a href="{{ url_for('performance') }}">공연소개</a></li>
+          <li><a href="{{ url_for('academy') }}">아카데미</a></li>
+          <li><a href="{{ url_for('reservation') }}">예약문의</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="profile-hero">
+    <div class="container">
+      <img src="{{ url_for('static', filename='images/post-noryeokman.png') }}" alt="노력맨 아티스트 프로필">
+      <h2>노력맨 버블쇼 아티스트</h2>
+    </div>
+  </section>
+
+  <section class="profile-content">
+    <div class="container">
+      <div class="profile-intro">
+        <h3>소개</h3>
+        <p>노력맨 버블쇼는 다양한 버블 공연과 교육, 장비제작을 전문으로 하는 개인 아티스트 브랜드입니다.</p>
+        <p>손버블, 버블막대, 거품기, 연기버블, 불쇼 등 다양한 스타일의 버블쇼 공연을 선보이고 있습니다.</p>
+        <p>또한 버블쇼 기술 교육부터 공연 구성, 실전 공연까지 체계적인 커리큘럼을 통해 교육을 진행하고 있으며, 버블쇼 장비 제작 노하우 공유 및 맞춤형 장비 제작도 함께 하고 있습니다.</p>
+      </div>
+
+      <div class="performance-history">
+        <h3>공연 이력</h3>
+        <ul>
+          <li>해든어린이집 버블공연</li>
+          <li>나래유치원 버블공연</li>
+          <li>예뜰 교회 2회연속 버블공연</li>
+          <li>보라어린이집 버블공연</li>
+          <li>하은유치원 버블공연</li>
+          <li>키즈원어린이집 버블공연 체험사진</li>
+          <li>강화군립어린이집 버블공연</li>
+          <li>버블강습회 용인에서 오셨어요 해외 선교 목적</li>
+          <li>소담**어린이집 야외 바블쇼, 아나바다행사</li>
+          <li>버블쇼강습회 장비구매 아산에서 오셨습니다 24.5.15</li>
+          <!-- 추가 공연 이력은 PRD.md에서 가져와 계속 나열 -->
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>연락처: 010-8944-3907 | 이메일: 05070208@hanmail.net</p>
+      <p>주소: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
+      <p>&copy; 2024 노력맨 버블쇼. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html> 
