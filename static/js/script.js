@@ -10,4 +10,32 @@ document.addEventListener('DOMContentLoaded', function() {
       this.src = '/static/images/placeholder.png'; // 대체 이미지
     });
   });
+  
+  // 캐러셀 설정 (4초마다 슬라이드 변경)
+  const carousel = document.getElementById('heroCarousel');
+  if (carousel) {
+    const carouselInstance = new bootstrap.Carousel(carousel, {
+      interval: 4000, // 4초
+      wrap: true,
+      pause: 'hover'
+    });
+  }
+  
+  // 스크롤 애니메이션
+  const animateOnScroll = function() {
+    const elements = document.querySelectorAll('.card, .performance-item, .equipment-item, .curriculum-item, .option-item');
+    
+    elements.forEach(element => {
+      const elementPosition = element.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      if (elementPosition < windowHeight - 50) {
+        element.classList.add('fade-in');
+      }
+    });
+  };
+  
+  // 초기 실행 및 스크롤 이벤트에 연결
+  animateOnScroll();
+  window.addEventListener('scroll', animateOnScroll);
 }); 

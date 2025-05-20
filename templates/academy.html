@@ -5,21 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>아카데미 - 노력맨 버블쇼</title>
   <meta name="description" content="노력맨 버블쇼의 교육 과정과 장비 제작 노하우를 소개합니다.">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header class="sticky-top">
     <div class="container">
-      <h1>노력맨 버블쇼</h1>
-      <nav>
-        <ul>
-          <li><a href="{{ url_for('index') }}">홈</a></li>
-          <li><a href="{{ url_for('profile') }}">프로필</a></li>
-          <li><a href="{{ url_for('performance') }}">공연소개</a></li>
-          <li><a href="{{ url_for('academy') }}" class="active">아카데미</a></li>
-          <li><a href="{{ url_for('reservation') }}">예약문의</a></li>
-        </ul>
+      <nav class="navbar navbar-expand-lg navbar-light py-3">
+        <a class="navbar-brand" href="{{ url_for('index') }}">노력맨 버블쇼</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('index') }}">홈으로</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('profile') }}">프로필</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('performance') }}">공연소개</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ url_for('academy') }}">아카데미</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('reservation') }}">예약문의</a>
+            </li>
+          </ul>
+        </div>
       </nav>
     </div>
   </header>
@@ -89,14 +106,24 @@
     </div>
   </section>
 
-  <footer>
+  <footer class="bg-dark text-white py-4">
     <div class="container">
-      <p>연락처: 010-8944-3907 | 이메일: 05070208@hanmail.net</p>
-      <p>주소: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
-      <p>&copy; 2024 노력맨 버블쇼. All rights reserved.</p>
+      <div class="row">
+        <div class="col-md-6">
+          <h4>연락처</h4>
+          <p>전화: 010-8944-3907</p>
+          <p>이메일: 05070208@hanmail.net</p>
+          <p>주소: 대전 서구 둔산로 241, 보라아파트상가 2층</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p>&copy; 2024 노력맨 버블쇼. All rights reserved.</p>
+        </div>
+      </div>
     </div>
   </footer>
 
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html> 
