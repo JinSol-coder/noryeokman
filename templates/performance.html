@@ -61,16 +61,8 @@
           <p>특수 도구를 활용한 대형 버블 연출</p>
         </div>
         <div class="performance-item">
-          <h4>거품기</h4>
-          <p>풍부한 거품을 활용한 화려한 퍼포먼스</p>
-        </div>
-        <div class="performance-item">
           <h4>연기버블</h4>
           <p>연기를 활용한 신비로운 버블 효과</p>
-        </div>
-        <div class="performance-item">
-          <h4>불쇼</h4>
-          <p>불과 버블이 만나는 환상적인 퍼포먼스</p>
         </div>
       </div>
     </div>
@@ -80,16 +72,23 @@
     <div class="container">
       <h3>공연 갤러리</h3>
       <div class="gallery">
-        <!-- 갤러리 이미지는 실제 이미지로 교체 필요 -->
-        <div class="gallery-item">
-          <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="버블쇼 공연 사진">
-        </div>
-        <div class="gallery-item">
-          <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="버블쇼 공연 사진">
-        </div>
-        <div class="gallery-item">
-          <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="버블쇼 공연 사진">
-        </div>
+        {% if gallery_images %}
+          {% for image in gallery_images %}
+          <div class="gallery-item">
+            <img src="{{ image.path }}" alt="{{ image.original_filename }}">
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="gallery-item">
+            <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="버블쇼 공연 사진">
+          </div>
+          <div class="gallery-item">
+            <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="버블쇼 공연 사진">
+          </div>
+          <div class="gallery-item">
+            <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="버블쇼 공연 사진">
+          </div>
+        {% endif %}
       </div>
     </div>
   </section>
@@ -98,9 +97,10 @@
     <div class="container">
       <h3>공연 영상</h3>
       <div class="videos">
-        <!-- 실제 영상 임베드로 교체 필요 -->
         <div class="video-item">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/kZQoFpixBZM" frameborder="0" allowfullscreen></iframe>
+          </div>
         </div>
       </div>
     </div>
