@@ -14,7 +14,7 @@ app.secret_key = os.getenv('SECRET_KEY', 'default_secret_key')
 
 # MongoDB 연결
 client = MongoClient(os.getenv('MONGO_URI', 'mongodb://localhost:27017/'))
-db = client['bubble_show_db']
+db = client['myconnection']
 gallery_collection = db['gallery']
 
 # 허용된 파일 확장자
@@ -122,30 +122,6 @@ def delete_image(image_id):
         flash('이미지를 찾을 수 없습니다')
         
     return redirect(url_for('admin_gallery'))
-
-# MongoDB 연결 테스트 라우트
-@app.route('/test-mongo')
-def test_mongo():
-    try:
-        # 서버 정보 요청으로 연결 테스트
-        server_info = client.server_info()
-        # 데이터베이스 목록 가져오기
-        db_list = client.list_database_names()
-        # 갤러리 컬렉션의 문서 수 확인
-        doc_count = gallery_collection.count_documents({})
-        
-        return f"""
-        <h1>MongoDB 연결 성공!</h1>
-        <p>서버 버전: {server_info.get('version')}</p>
-        <p>데이터베이스 목록: {', '.join(db_list)}</p>
-        <p>갤러리 컬렉션 문서 수: {doc_count}</p>
-        """
-    except Exception as e:
-        return f"""
-        <h1>MongoDB 연결 실패</h1>
-        <p>오류: {str(e)}</p>
-        <p>MONGO_URI 환경 변수를 확인하세요.</p>
-        """
 
 # 테스트 데이터 삽입 라우트
 @app.route('/init-db')
