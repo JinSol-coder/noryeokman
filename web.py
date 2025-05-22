@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, jsonify
 from pymongo import MongoClient
 import os
 from werkzeug.utils import secure_filename
@@ -19,6 +19,7 @@ client = MongoClient(os.getenv('MONGO_URI', 'mongodb://localhost:27017/'))
 db = client['myconnection']
 gallery_collection = db['gallery']
 users_collection = db['users']
+videos_collection = db['videos']
 
 # 허용된 파일 확장자
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -55,7 +56,14 @@ def profile():
 def performance():
     # 갤러리 이미지 가져오기
     gallery_images = list(gallery_collection.find({'category': 'performance'}).sort('uploaded_at', -1))
-    return render_template('performance.html', gallery_images=gallery_images)
+    
+    # 비디오 가져오기
+    videos = list(videos_collection.find({'category': 'performance'}).sort('created_at', -1))
+    
+    # 디버깅을 위한 출력
+    print(f"Found {len(videos)} videos")
+    
+    return render_template('performance.html', gallery_images=gallery_images, videos=videos)
 
 @app.route('/academy')
 def academy():
@@ -171,17 +179,31 @@ def init_db():
         <p>오류: {str(e)}</p>
         """
 
-@app.route('/upload-image', methods=['POST'])
+# API 엔드포인트로 통합
+@app.route('/upload-performance-image', methods=['POST'])
 def upload_performance_image():
+    if not session.get('logged_in'):
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '로그인이 필요합니다'})
+        else:
+            flash('로그인이 필요합니다')
+            return redirect(url_for('login'))
+    
     if 'file' not in request.files:
-        flash('파일이 없습니다')
-        return redirect(url_for('performance'))
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '파일이 없습니다'})
+        else:
+            flash('파일이 없습니다')
+            return redirect(url_for('performance'))
     
     file = request.files['file']
     
     if file.filename == '':
-        flash('선택된 파일이 없습니다')
-        return redirect(url_for('performance'))
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '선택된 파일이 없습니다'})
+        else:
+            flash('선택된 파일이 없습니다')
+            return redirect(url_for('performance'))
     
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
@@ -202,11 +224,20 @@ def upload_performance_image():
             'uploaded_at': datetime.datetime.now()
         }
         
-        gallery_collection.insert_one(image_data)
+        result = gallery_collection.insert_one(image_data)
         
-        flash('이미지가 성공적으로 업로드되었습니다')
+        if request.headers.get('Content-Type') == 'application/json':
+            if result.inserted_id:
+                return jsonify({'success': True, 'message': '이미지가 성공적으로 업로드되었습니다'})
+            else:
+                return jsonify({'success': False, 'message': '이미지 업로드 중 오류가 발생했습니다'})
+        else:
+            flash('이미지가 성공적으로 업로드되었습니다')
     else:
-        flash('허용되지 않는 파일 형식입니다')
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '허용되지 않는 파일 형식입니다'})
+        else:
+            flash('허용되지 않는 파일 형식입니다')
     
     return redirect(url_for('performance'))
 
@@ -248,6 +279,167 @@ def admin_performance():
     # 갤러리 이미지 가져오기
     gallery_images = list(gallery_collection.find({'category': 'performance'}).sort('uploaded_at', -1))
     return render_template('admin/performance.html', gallery_images=gallery_images)
+
+@app.route('/delete-performance-image/<image_id>')
+def delete_performance_image(image_id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    try:
+        # 이미지 정보 가져오기
+        image = gallery_collection.find_one({'_id': ObjectId(image_id)})
+        if image:
+            # 파일 시스템에서 이미지 삭제
+            file_path = os.path.join(app.static_folder, image['path'].lstrip('/static/'))
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            
+            # 데이터베이스에서 이미지 정보 삭제
+            gallery_collection.delete_one({'_id': ObjectId(image_id)})
+            flash('이미지가 성공적으로 삭제되었습니다')
+        else:
+            flash('이미지를 찾을 수 없습니다')
+    except Exception as e:
+        flash(f'이미지 삭제 중 오류가 발생했습니다: {str(e)}')
+    
+    return redirect(url_for('performance'))
+
+# 비디오 목록 가져오기 함수
+def get_performance_videos():
+    return list(videos_collection.find({'category': 'performance'}).sort('created_at', -1))
+
+# 비디오 추가 라우트 수정
+@app.route('/add-performance-video', methods=['POST'])
+def add_performance_video():
+    if not session.get('logged_in'):
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '로그인이 필요합니다'})
+        else:
+            return redirect(url_for('login'))
+    
+    # JSON 요청 처리
+    if request.headers.get('Content-Type') == 'application/json':
+        data = request.get_json()
+        title = data.get('title', '').strip()
+        youtube_id = data.get('youtube_id', '').strip()
+    # 폼 데이터 처리
+    else:
+        title = request.form.get('title', '').strip()
+        youtube_id = request.form.get('youtube_id', '').strip()
+    
+    # 디버깅을 위한 출력
+    print(f"Adding video - Title: {title}, YouTube ID: {youtube_id}")
+    
+    if not title or not youtube_id:
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '제목과 유튜브 ID를 모두 입력해주세요'})
+        else:
+            flash('제목과 유튜브 ID를 모두 입력해주세요')
+            return redirect(url_for('performance'))
+    
+    # 유튜브 ID에서 URL 형식 처리
+    if 'youtube.com' in youtube_id or 'youtu.be' in youtube_id:
+        if 'v=' in youtube_id:
+            youtube_id = youtube_id.split('v=')[1].split('&')[0]
+        elif 'youtu.be/' in youtube_id:
+            youtube_id = youtube_id.split('youtu.be/')[1]
+    
+    # 유튜브 ID 형식 검증 (간단한 검증)
+    if len(youtube_id) < 5 or len(youtube_id) > 20:
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '유효하지 않은 유튜브 ID입니다'})
+        else:
+            flash('유효하지 않은 유튜브 ID입니다')
+            return redirect(url_for('performance'))
+    
+    video_data = {
+        'title': title,
+        'youtube_id': youtube_id,
+        'category': 'performance',
+        'created_at': datetime.datetime.now()
+    }
+    
+    # 디버깅을 위한 출력
+    print(f"Video data to insert: {video_data}")
+    
+    result = videos_collection.insert_one(video_data)
+    
+    # 디버깅을 위한 출력
+    print(f"Insert result: {result.inserted_id}")
+    
+    if result.inserted_id:
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': True, 'message': '비디오가 성공적으로 추가되었습니다'})
+        else:
+            flash('비디오가 성공적으로 추가되었습니다')
+    else:
+        if request.headers.get('Content-Type') == 'application/json':
+            return jsonify({'success': False, 'message': '비디오 추가 중 오류가 발생했습니다'})
+        else:
+            flash('비디오 추가 중 오류가 발생했습니다')
+    
+    return redirect(url_for('performance'))
+
+# 비디오 수정 라우트
+@app.route('/edit-performance-video/<video_id>', methods=['POST'])
+def edit_performance_video(video_id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    title = request.form.get('title', '').strip()
+    youtube_id = request.form.get('youtube_id', '').strip()
+    
+    if not title or not youtube_id:
+        flash('제목과 유튜브 ID를 모두 입력해주세요')
+        return redirect(url_for('performance'))
+    
+    # 유튜브 ID 형식 검증 (간단한 검증)
+    if len(youtube_id) < 5 or len(youtube_id) > 20:
+        flash('유효하지 않은 유튜브 ID입니다')
+        return redirect(url_for('performance'))
+    
+    videos_collection.update_one(
+        {'_id': ObjectId(video_id)},
+        {'$set': {
+            'title': title,
+            'youtube_id': youtube_id,
+            'updated_at': datetime.datetime.now()
+        }}
+    )
+    
+    flash('비디오가 성공적으로 수정되었습니다')
+    return redirect(url_for('performance'))
+
+# 비디오 삭제 라우트
+@app.route('/delete-performance-video/<video_id>')
+def delete_performance_video(video_id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    
+    try:
+        videos_collection.delete_one({'_id': ObjectId(video_id)})
+        flash('비디오가 성공적으로 삭제되었습니다')
+    except Exception as e:
+        flash(f'비디오 삭제 중 오류가 발생했습니다: {str(e)}')
+    
+    return redirect(url_for('performance'))
+
+# API 엔드포인트 추가
+@app.route('/api/performance-images')
+def api_performance_images():
+    gallery_images = list(gallery_collection.find({'category': 'performance'}).sort('uploaded_at', -1))
+    # ObjectId를 문자열로 변환
+    for image in gallery_images:
+        image['_id'] = str(image['_id'])
+    return jsonify(gallery_images)
+
+@app.route('/api/performance-videos')
+def api_performance_videos():
+    videos = list(videos_collection.find({'category': 'performance'}).sort('created_at', -1))
+    # ObjectId를 문자열로 변환
+    for video in videos:
+        video['_id'] = str(video['_id'])
+    return jsonify(videos)
 
 if __name__ == '__main__':
     app.run(debug=True)
