@@ -1,0 +1,53 @@
+<header class="sticky-top">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light py-3">
+      <a class="navbar-brand" href="{{ url_for('index') }}">노력맨 버블쇼</a>
+      {% if request.path.startswith('/admin') %}
+      <span class="ms-3 badge bg-danger">관리자 모드</span>
+      {% endif %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          {% if request.path.startswith('/admin') %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/admin/gallery' %}active{% endif %}" href="{{ url_for('admin_gallery') }}">갤러리 관리</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/admin/upload' %}active{% endif %}" href="{{ url_for('upload_image') }}">이미지 업로드</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{{ url_for('index') }}">홈으로</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/profile' %}active{% endif %}" href="{{ url_for('profile') }}">프로필</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/performance' %}active{% endif %}" href="{{ url_for('performance') }}">공연소개</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/academy' %}active{% endif %}" href="{{ url_for('academy') }}">아카데미</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/reservation' %}active{% endif %}" href="{{ url_for('reservation') }}">예약문의</a>
+            </li>
+            {% if session.get('logged_in') %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link {% if request.path == '/login' %}active{% endif %}" href="{{ url_for('login') }}">관리자 로그인</a>
+            </li>
+            {% endif %}
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </div>
+</header> 

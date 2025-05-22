@@ -38,4 +38,27 @@ document.addEventListener('DOMContentLoaded', function() {
   // 초기 실행 및 스크롤 이벤트에 연결
   animateOnScroll();
   window.addEventListener('scroll', animateOnScroll);
+
+  const uploadForm = document.getElementById('uploadForm');
+  
+  if (uploadForm) {
+    uploadForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(uploadForm);
+      
+      fetch('/upload-image', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        console.log('Success:', data);
+        location.reload(); // 페이지 새로고침
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    });
+  }
 }); 

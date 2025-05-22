@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>공연소개 - 노력맨 버블쇼</title>
+  <title>공연소개 관리 - 노력맨 버블쇼</title>
   <meta name="description" content="노력맨 버블쇼의 다양한 공연 프로그램을 소개합니다.">
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -11,12 +11,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- 기존 헤더 부분을 navbar.html과 동일하게 변경 -->
   {% include 'navbar.html' %}
 
   <section class="performance-hero">
     <div class="container">
-      <h2>공연소개</h2>
+      <h2>공연소개 관리</h2>
       <p>다양한 스타일의 버블쇼 공연을 소개합니다</p>
     </div>
   </section>
@@ -44,14 +43,15 @@
   <section class="performance-gallery">
     <div class="container">
       <h3>공연 갤러리</h3>
-      {% if session.get('logged_in') %}
       <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#uploadModal">+</button>
-      {% endif %}
       <div class="gallery">
         {% if gallery_images %}
           {% for image in gallery_images %}
           <div class="gallery-item">
             <img src="{{ image.path }}" alt="{{ image.original_filename }}">
+            <div class="gallery-item-actions mt-2">
+              <a href="{{ url_for('delete_image', image_id=image._id) }}" class="btn btn-danger btn-sm" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+            </div>
           </div>
           {% endfor %}
         {% else %}
@@ -72,7 +72,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form id="uploadForm" method="POST" enctype="multipart/form-data">
+          <form id="uploadForm" method="POST" enctype="multipart/form-data" action="{{ url_for('upload_performance_image') }}">
             <div class="mb-3">
               <label for="file" class="form-label">이미지 파일 선택</label>
               <input class="form-control" type="file" id="file" name="file" accept="image/*">

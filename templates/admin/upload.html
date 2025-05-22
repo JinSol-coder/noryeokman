@@ -10,27 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="sticky-top">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light py-3">
-        <a class="navbar-brand" href="{{ url_for('index') }}">노력맨 버블쇼</a>
-        <span class="ms-3 badge bg-danger">관리자 모드</span>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('admin_gallery') }}">갤러리 관리</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="{{ url_for('upload_image') }}">이미지 업로드</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-  </header>
+  {% include 'navbar.html' %}
 
   <section class="admin-content py-5">
     <div class="container">
