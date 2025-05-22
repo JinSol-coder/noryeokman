@@ -217,21 +217,30 @@ footer p {
 }
 
 /* 네비게이션 스타일 */
+.navbar {
+  background-color: white !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
 .navbar-brand {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #0078d7 !important;
+  color: #007bff !important;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .nav-link {
-  font-weight: 500;
   color: #333 !important;
+  font-weight: 500;
   margin: 0 10px;
-  transition: color 0.3s;
 }
 
-.nav-link:hover, .nav-link.active {
-  color: #0078d7 !important;
+.nav-link.active {
+  color: #007bff !important;
+  font-weight: 700;
+}
+
+.nav-link:hover {
+  color: #007bff !important;
 }
 
 /* 카드 스타일 */

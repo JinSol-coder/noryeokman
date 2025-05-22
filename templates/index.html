@@ -12,14 +12,10 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
 </head>
 <body>
-  <header class="sticky-top">
-    <div class="container">
-      {% include 'navbar.html' %}
-    </div>
-  </header>
+  {% include 'navbar.html' %}
 
   <section class="hero">
-    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
       <div class="carousel-inner">
         {% if gallery_images %}
           {% for image in gallery_images %}
@@ -61,7 +57,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100">
             <div class="card-body text-center">
               <h3 class="card-title">공연</h3>
               <p class="card-text">손버블, 버블막대, 기포기, 연기버블, 불쇼 등 다양한 스타일의 버블쇼 공연</p>
@@ -70,7 +66,7 @@
           </div>
         </div>
         <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100">
             <div class="card-body text-center">
               <h3 class="card-title">교육</h3>
               <p class="card-text">버블쇼 기술 교육부터 공연 구성, 실전 공연까지 체계적인 커리큘럼</p>
@@ -79,7 +75,7 @@
           </div>
         </div>
         <div class="col-md-4 mb-4">
-          <div class="card h-100 shadow-sm">
+          <div class="card h-100">
             <div class="card-body text-center">
               <h3 class="card-title">장비</h3>
               <p class="card-text">버블쇼 장비 제작 노하우 공유 및 맞춤형 장비 제작</p>
